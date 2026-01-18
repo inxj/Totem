@@ -61,7 +61,6 @@ Totem is designed to increase **profitability, resilience, and focus** while ret
   - Existing builder entity trades as **Totem Projects (Builder X)**.
   - A bi-directional services agreement known as the Partnership Agreement shares support, revenue, and cost.
   - Builders can **onboard/offboard with low friction**, retaining autonomy over existing and new projects.
-  - 50 builders onboarded by year 4
 
 ## How to join Totem
 
