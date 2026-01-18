@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import Navbar from './components/Navbar';
+import ClientNavbar from './components/ClientNavbar';
 import Hero from './components/Hero';
 import PromiseSection from './components/PromiseSection';
 import QuotelessSection from './components/QuotelessSection';
@@ -27,8 +27,8 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative">
-      <Navbar viewMode={viewMode} />
+    <div className="relative client-page">
+      <ClientNavbar />
       
       <main ref={containerRef} className="snap-container">
         <section className="snap-section">

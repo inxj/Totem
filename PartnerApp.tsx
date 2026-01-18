@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ValueProp, Step, ViewMode } from './types';
-import Navbar from './components/Navbar';
+import PartnerNavbar from './components/PartnerNavbar';
 import PartnerHero from './components/PartnerHero';
 import ValueProposition from './components/ValueProposition';
 import BusinessModel from './components/BusinessModel';
@@ -16,6 +16,22 @@ const PartnerApp: React.FC = () => {
   useEffect(() => {
     document.body.className = `${bgColor} ${textColor} font-body transition-theme`;
   }, [bgColor, textColor]);
+
+  useEffect(() => {
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLAnchorElement;
+      if (target.tagName === 'A' && target.hash) {
+        const section = document.querySelector(target.hash);
+        if (section) {
+          e.preventDefault();
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+    return () => document.removeEventListener('click', handleAnchorClick);
+  }, []);
 
   const partnerValueProps: ValueProp[] = [
     {
@@ -61,17 +77,28 @@ const PartnerApp: React.FC = () => {
 
   return (
     <div className="min-h-screen">
-      <Navbar viewMode={viewMode} />
+      <PartnerNavbar />
 
-      <main>
-        <PartnerHero />
-        <ValueProposition viewMode={viewMode} props={partnerValueProps} />
-        <BusinessModel />
-        <StepsTimeline steps={steps} />
-        <ContactSection viewMode={viewMode} />
+      <main className="snap-container">
+        <section className="snap-section">
+          <PartnerHero />
+        </section>
+        <section id="value" className="snap-section">
+          <ValueProposition viewMode={viewMode} props={partnerValueProps} />
+        </section>
+        <section id="model" className="snap-section">
+          <BusinessModel />
+        </section>
+        <section id="process" className="snap-section">
+          <StepsTimeline steps={steps} />
+        </section>
+        <section id="contact" className="snap-section">
+          <ContactSection viewMode={viewMode} />
+        </section>
+        <section className="snap-section flex flex-col justify-end bg-[#1a1a1a]">
+          <Footer viewMode={viewMode} />
+        </section>
       </main>
-
-      <Footer viewMode={viewMode} />
     </div>
   );
 };

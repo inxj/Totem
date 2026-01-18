@@ -16,7 +16,6 @@ const ContactSection: React.FC<ContactSectionProps> = ({ viewMode }) => {
 
   return (
     <section
-      id="contact"
       className={`py-24 md:py-32 transition-colors ${isDark ? 'bg-totem-black text-totem-white' : 'bg-white text-totem-black'}`}
     >
       <div className="max-w-7xl mx-auto px-6">

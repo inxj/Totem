@@ -2,13 +2,13 @@ import React from 'react';
 
 const PartnerHero: React.FC = () => {
   return (
-    <section className="relative pt-32 pb-20 md:pt-48 md:pb-40 px-6 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-24 pb-16 md:pt-32 md:pb-24 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-8">
           <p className="text-primary font-medium tracking-[0.25em] uppercase text-xs mb-8">
             For Builders & Craftsmen
           </p>
-          <h1 className="font-display text-5xl md:text-8xl lg:text-[100px] leading-[0.95] mb-10">
+          <h1 className="font-display text-4xl md:text-7xl lg:text-[80px] leading-[0.95] mb-10">
             Increase Profitability, <br />
             <span className="italic">Resilience</span>, and Focus.
           </h1>

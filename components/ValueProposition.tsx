@@ -11,7 +11,7 @@ const ValueProposition: React.FC<Props> = ({ viewMode, props }) => {
   const isDark = viewMode === 'partner';
 
   return (
-    <section id="value" className={`py-24 md:py-32 transition-colors ${isDark ? 'bg-totem-gray' : 'bg-neutral-50'}`}>
+    <section className={`py-24 md:py-32 transition-colors ${isDark ? 'bg-totem-gray' : 'bg-neutral-50'}`}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
           <div className="max-w-xl">

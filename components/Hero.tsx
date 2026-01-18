@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
           </p>
         </div>
 
-        <div className="max-w-lg mx-auto italic font-serif text-lg md:text-xl text-gray-600 leading-relaxed">
+        <div className="max-w-lg mx-auto italic font-serif text-sm md:text-base text-gray-600 leading-relaxed">
           <span className="font-bold not-italic text-sm tracking-widest uppercase block mb-4 opacity-70">Noun:</span>
           An object, such as a residence or commercial property, which serves as the emblem of a family or clan and often a reminder of its ancestry.
         </div>

@@ -3,7 +3,7 @@ import React from 'react';
 
 const BusinessModel: React.FC = () => {
   return (
-    <section id="model" className="py-32 bg-totem-black text-totem-white overflow-hidden">
+    <section className="py-32 bg-totem-black text-totem-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
           <div>
