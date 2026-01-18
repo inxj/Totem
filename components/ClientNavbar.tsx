@@ -4,6 +4,7 @@ const ClientNavbar: React.FC = () => {
   const navLinks = [
     { label: 'Our Promise', href: '#promise' },
     { label: 'Quoteless', href: '#quoteless' },
+    { label: 'Projects', href: '#projects' },
     { label: 'Contact', href: '#contact' },
   ];
 
@@ -25,7 +26,7 @@ const ClientNavbar: React.FC = () => {
         href="/partner.html"
         className="px-6 py-2 border border-current text-xs font-medium tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-300"
       >
-        Partner Portal
+        For Builders
       </a>
     </nav>
   );

@@ -7,27 +7,27 @@ const BusinessModel: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
           <div>
-            <h2 className="font-display text-4xl md:text-5xl mb-10">The Operating Model</h2>
+            <h2 className="font-display text-4xl md:text-5xl mb-10">The Partnership Model</h2>
             <p className="text-neutral-400 font-light mb-12 leading-relaxed">
-              Totem operates like a pseudo-partnership. You retain your license and corporate entity, while operating collectively as Totem Projects. We provide the leverage of a major firm with the autonomy of a boutique builder.
+              Imagine having a full back-office behind you—scheduling, administration, materials procurement, legal, insurance, and access to expert tradespersons—all working to ensure your projects succeed. That's what Totem delivers. You keep your license and your identity. We give you the infrastructure to build with confidence.
             </p>
             
-            <div className="space-y-8">
-              <div className="flex gap-6 items-start">
-                <div className="w-px h-12 bg-primary"></div>
+            <div className="space-y-10 mt-4">
+              <div className="flex gap-6 items-stretch">
+                <div className="w-px bg-primary shrink-0"></div>
                 <div>
-                  <h4 className="font-display text-xl mb-2">Totem Group Pty Ltd</h4>
+                  <h4 className="font-display text-xl mb-3">Keep Your Existing License and Company</h4>
                   <p className="text-xs text-neutral-500 uppercase tracking-widest leading-loose">
-                    Owns brand, shared services, tools & group assets. Target 70 staff by Year 4.
+                    You retain your builder's license and corporate entity. Simply add a trading name and establish a partnership agreement—your business stays yours.
                   </p>
                 </div>
               </div>
-              <div className="flex gap-6 items-start">
-                <div className="w-px h-12 bg-neutral-700"></div>
+              <div className="flex gap-6 items-stretch">
+                <div className="w-px bg-neutral-700 shrink-0"></div>
                 <div>
-                  <h4 className="font-display text-xl mb-2">Partner Builders</h4>
+                  <h4 className="font-display text-xl mb-3">Become Part of Totem</h4>
                   <p className="text-xs text-neutral-500 uppercase tracking-widest leading-loose">
-                    50 builders onboarded by Year 4. Bi-directional revenue and cost sharing.
+                    Access scheduling, administration, materials, legal, insurance, and expert trades. Our partners protect and support each other through whatever comes.
                   </p>
                 </div>
               </div>
@@ -39,9 +39,9 @@ const BusinessModel: React.FC = () => {
               <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors"></div>
               <div className="text-center relative z-10">
                 <span className="material-icons-outlined text-6xl text-primary mb-6">handshake</span>
-                <h3 className="font-display text-3xl mb-4 italic">Bi-Directional Services</h3>
+                <h3 className="font-display text-3xl mb-4 italic">Built to Support You</h3>
                 <p className="text-sm text-neutral-500 max-w-xs mx-auto font-light leading-relaxed">
-                  Support, revenue, and cost sharing designed for mutual resilience and professional growth.
+                  Your license. Your business. Our infrastructure, our network, and our commitment to your success.
                 </p>
               </div>
               {/* Decorative corners */}

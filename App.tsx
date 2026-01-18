@@ -4,6 +4,7 @@ import ClientNavbar from './components/ClientNavbar';
 import Hero from './components/Hero';
 import PromiseSection from './components/PromiseSection';
 import QuotelessSection from './components/QuotelessSection';
+import ProjectsSection from './components/ProjectsSection';
 import Footer from './components/Footer';
 
 const App: React.FC = () => {
@@ -41,6 +42,10 @@ const App: React.FC = () => {
         
         <section id="quoteless" className="snap-section">
           <QuotelessSection />
+        </section>
+        
+        <section id="projects" className="snap-section">
+          <ProjectsSection />
         </section>
         
         <section id="contact" className="snap-section flex flex-col justify-end bg-[#1a1a1a]">

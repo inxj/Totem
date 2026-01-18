@@ -3,7 +3,7 @@ import React from 'react';
 const PartnerNavbar: React.FC = () => {
   const navLinks = [
     { label: 'Value', href: '#value' },
-    { label: 'Model', href: '#model' },
+    { label: 'Partnership', href: '#model' },
     { label: 'Process', href: '#process' },
     { label: 'Apply', href: '#contact' },
   ];

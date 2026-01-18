@@ -1,58 +1,45 @@
 import React from 'react';
 
-const projects = [
+const pillars = [
   {
-    title: 'New Farm Terrace Upgrade',
-    type: 'Residential Renovation',
-    description: 'A heritage-sensitive interior renovation with bespoke joinery and improved natural light.',
-    image: 'https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&q=80&w=1200'
+    title: 'Predict',
+    description: "We map out your project with clarity from day one—forecasting options, costs, and key milestones so you can make informed decisions at every stage.",
   },
   {
-    title: 'Teneriffe Studio Build',
-    type: 'Light Commercial',
-    description: 'Adaptive reuse of a warehouse bay into a client-facing studio with refined materials.',
-    image: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=1200'
+    title: 'Adapt',
+    description: "Real projects face real conditions. Whether it's weather delays, design refinements, or shifting markets, we navigate change without losing momentum or control.",
   },
   {
-    title: 'Paddington Extension',
-    type: 'Residential Build',
-    description: 'A contemporary extension that preserves the original cottage footprint while expanding living zones.',
-    image: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&q=80&w=1200'
-  }
+    title: 'Assure',
+    description: "You stay in the driver's seat, backed by a team built to deliver. With Totem behind your project, you have the confidence that comes from knowing it's in capable hands.",
+  },
 ];
 
 const ProjectsSection: React.FC = () => {
   return (
-    <section className="py-24 md:py-32 bg-white" id="projects">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-          <div className="max-w-2xl">
-            <p className="text-xs tracking-[0.35em] uppercase text-neutral-400 font-semibold mb-4">Projects</p>
-            <h2 className="font-display text-4xl md:text-5xl mb-4">Recent work that balances form and performance.</h2>
-            <p className="text-neutral-500 text-sm md:text-base leading-relaxed">
-              Sample projects shown until the first Totem case studies are ready for release.
-            </p>
-          </div>
-          <p className="text-[11px] tracking-widest uppercase text-neutral-400 font-semibold">Residential + light commercial</p>
+    <section className="min-h-screen flex items-center bg-neutral-100" id="projects">
+      <div className="max-w-7xl mx-auto px-6 py-24 md:py-32 w-full">
+        <div className="max-w-3xl mb-16">
+          <p className="text-xs tracking-[0.35em] uppercase text-neutral-400 font-semibold mb-4">New builds and major renovations</p>
+          <h2 className="font-display text-5xl md:text-7xl font-serif leading-none mb-6">Projects</h2>
+          <p className="text-neutral-600 text-base md:text-lg leading-relaxed">
+            When you're undertaking a significant build or renovation, clarity matters. Totem partners with clients on transformative projects—new constructions, large-scale renovations, and complex refurbishments—where precision planning and dependable execution are non-negotiable.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <article key={project.title} className="group border border-neutral-200 overflow-hidden bg-neutral-50">
-              <div className="h-64 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              <div className="p-8">
-                <p className="text-[10px] tracking-[0.3em] uppercase text-neutral-400 font-semibold mb-4">{project.type}</p>
-                <h3 className="font-display text-2xl mb-3">{project.title}</h3>
-                <p className="text-sm text-neutral-500 leading-relaxed">{project.description}</p>
-              </div>
+          {pillars.map((pillar) => (
+            <article key={pillar.title} className="bg-white p-10 border border-neutral-200">
+              <h3 className="font-display text-2xl mb-4">{pillar.title}</h3>
+              <p className="text-sm text-neutral-500 leading-relaxed">{pillar.description}</p>
             </article>
           ))}
+        </div>
+
+        <div className="mt-16 pt-12 border-t border-neutral-300">
+          <p className="text-neutral-500 text-sm leading-relaxed max-w-2xl">
+            Whether you're building from the ground up or reimagining an existing space, Totem brings the structure and responsiveness to see it through—on scope, on budget, and aligned with your vision as it develops.
+          </p>
         </div>
       </div>
     </section>
