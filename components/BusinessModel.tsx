@@ -27,7 +27,7 @@ const BusinessModel: React.FC = () => {
                 <div>
                   <h4 className="font-display text-xl mb-3">Become Part of Totem</h4>
                   <p className="text-xs text-neutral-500 uppercase tracking-widest leading-loose">
-                    Access scheduling, administration, materials, legal, insurance, and expert trades. Our partners protect and support each other through whatever comes.
+                    You get access scheduling, administration, capital, materials, legal, insurance, and expert trades. Our partners protect and support each other through whatever comes. Take holidays, be sick, and navigate weather, costs, and other challenges with comfort.
                   </p>
                 </div>
               </div>

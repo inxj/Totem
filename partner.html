@@ -53,6 +53,22 @@
       height: 100vh;
       width: 100%;
     }
+    @media (max-width: 768px) {
+      .snap-container {
+        scroll-snap-type: none;
+        height: auto;
+        overflow-y: visible;
+      }
+      .snap-section {
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
+        height: auto;
+        min-height: 100vh;
+      }
+    }
+    .max-w-7xl {
+      max-width: 110rem !important;
+    }
   </style>
   <script type="importmap">
   {

@@ -2,16 +2,16 @@ import React from 'react';
 
 const pillars = [
   {
-    title: 'Predict',
+    title: 'Predictable',
     description: "We map out your project with clarity from day one—forecasting options, costs, and key milestones so you can make informed decisions at every stage.",
   },
   {
-    title: 'Adapt',
+    title: 'Adaptable',
     description: "Real projects face real conditions. Whether it's weather delays, design refinements, or shifting markets, we navigate change without losing momentum or control.",
   },
   {
-    title: 'Assure',
-    description: "You stay in the driver's seat, backed by a team built to deliver. With Totem behind your project, you have the confidence that comes from knowing it's in capable hands.",
+    title: 'ROI',
+    description: "Assured delivery protects your investment. We keep scope, cost, and decisions aligned so the work lands on budget and delivers the return you expect.",
   },
 ];
 
@@ -27,13 +27,45 @@ const ProjectsSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {pillars.map((pillar) => (
             <article key={pillar.title} className="bg-white p-10 border border-neutral-200">
               <h3 className="font-display text-2xl mb-4">{pillar.title}</h3>
               <p className="text-sm text-neutral-500 leading-relaxed">{pillar.description}</p>
             </article>
           ))}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <img
+              className="h-72 md:h-full w-full object-cover"
+              src="/images/projects-coastal-residence.jpg"
+              alt="Architectural coastal residence"
+            />
+            <img
+              className="h-72 md:h-full w-full object-cover"
+              src="/images/projects-modern-renovation.jpg"
+              alt="Modern living renovation"
+            />
+            <img
+              className="h-72 w-full object-cover md:col-span-2"
+              src="/images/projects-kitchen-renovation.jpg"
+              alt="Contemporary kitchen renovation"
+            />
+          </div>
+          <div className="flex flex-col gap-6">
+            <img
+              className="h-72 w-full object-cover"
+              src="/images/projects-exterior-facade-alt.jpg"
+              alt="Elegant exterior facade"
+            />
+            <img
+              className="h-72 w-full object-cover"
+              src="/images/projects-luxury-details.jpg"
+              alt="Luxury renovation details"
+            />
+          </div>
         </div>
 
         <div className="mt-16 pt-12 border-t border-neutral-300">

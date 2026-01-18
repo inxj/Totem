@@ -37,7 +37,7 @@ const PartnerApp: React.FC = () => {
     {
       icon: 'filter_alt',
       title: 'Qualified Leads',
-      description: 'Stop chasing dead ends. We provide a steady stream of pre-vetted, high-value projects matched to your expertise.'
+      description: 'Stop chasing dead ends and bad projects. Our pipeline provides access to lower risk and high-profit projects matched to your expertise.'
     },
     {
       icon: 'shield',
@@ -46,8 +46,8 @@ const PartnerApp: React.FC = () => {
     },
     {
       icon: 'psychology',
-      title: 'Operational Leverage',
-      description: 'Shared scheduling, procurement, and admin support so you can focus on delivery and craftsmanship.'
+      title: 'Operational Support',
+      description: 'Expert sub-contactors, working capital, AI-powered scheduling, procurement, billing, tax, and project management support so you can focus on delivery and craftsmanship.'
     }
   ];
 

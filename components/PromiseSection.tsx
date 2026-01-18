@@ -17,9 +17,10 @@ const PromiseSection: React.FC = () => {
   ];
 
   return (
-    <div className="h-full w-full flex flex-col md:flex-row bg-white overflow-hidden">
-      {/* Left Content */}
-      <div className="w-full md:w-1/2 h-full flex flex-col justify-center px-12 md:px-32 py-20">
+    <div className="h-full w-full bg-white overflow-hidden">
+      <div className="mx-auto flex h-full w-full max-w-7xl flex-col md:flex-row">
+        {/* Left Content */}
+        <div className="w-full md:w-1/2 h-full flex flex-col justify-center px-12 md:px-20 py-20">
         <div className="max-w-md space-y-12">
           <div className="space-y-4">
              <span className="inline-block px-3 py-1 border border-gray-200 rounded-full text-[10px] uppercase tracking-widest text-gray-400 font-bold">
@@ -44,32 +45,33 @@ const PromiseSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Right Image Grid */}
-      <div className="w-full md:w-1/2 h-full bg-gray-50 p-12 md:p-16">
-        <div className="grid grid-cols-2 gap-4 h-full">
-          <div className="space-y-4">
-            <img 
-              src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800" 
-              className="w-full h-[60%] object-cover grayscale hover:grayscale-0 transition-all duration-700" 
-              alt="Architecture detail"
-            />
-            <img 
-              src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=800" 
-              className="w-full h-[38%] object-cover grayscale hover:grayscale-0 transition-all duration-700" 
-              alt="Bathroom detail"
-            />
-          </div>
-          <div className="space-y-4 pt-12">
-            <img 
-              src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=800" 
-              className="w-full h-[40%] object-cover grayscale hover:grayscale-0 transition-all duration-700" 
-              alt="Materials"
-            />
-            <img 
-              src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=800" 
-              className="w-full h-[55%] object-cover grayscale hover:grayscale-0 transition-all duration-700" 
-              alt="Interior minimalism"
-            />
+        {/* Right Image Grid */}
+        <div className="w-full md:w-1/2 h-full bg-gray-50 p-12 md:p-16">
+          <div className="grid grid-cols-2 gap-4 h-full">
+            <div className="space-y-4">
+              <img 
+                src="/images/promise-architecture-detail.jpg" 
+                className="w-full h-[60%] object-cover grayscale hover:grayscale-0 transition-all duration-700" 
+                alt="Architecture detail"
+              />
+              <img 
+                src="/images/promise-bathroom-detail.jpg" 
+                className="w-full h-[38%] object-cover grayscale hover:grayscale-0 transition-all duration-700" 
+                alt="Bathroom detail"
+              />
+            </div>
+            <div className="space-y-4 pt-12">
+              <img 
+                src="/images/promise-materials.jpg" 
+                className="w-full h-[40%] object-cover grayscale hover:grayscale-0 transition-all duration-700" 
+                alt="Materials"
+              />
+              <img 
+                src="/images/promise-interior-minimal.jpg" 
+                className="w-full h-[55%] object-cover grayscale hover:grayscale-0 transition-all duration-700" 
+                alt="Interior minimalism"
+              />
+            </div>
           </div>
         </div>
       </div>
