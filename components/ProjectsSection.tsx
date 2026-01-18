@@ -48,11 +48,6 @@ const ProjectsSection: React.FC = () => {
               src="/images/projects-modern-renovation.jpg"
               alt="Modern living renovation"
             />
-            <img
-              className="h-72 w-full object-cover md:col-span-2"
-              src="/images/projects-kitchen-renovation.jpg"
-              alt="Contemporary kitchen renovation"
-            />
           </div>
           <div className="flex flex-col gap-6">
             <img
