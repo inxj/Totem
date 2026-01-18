@@ -22,7 +22,7 @@ const ProjectsSection: React.FC = () => {
         <div className="max-w-3xl mb-16">
           <p className="text-xs tracking-[0.35em] uppercase text-neutral-400 font-semibold mb-4">New builds and major renovations</p>
           <h2 className="font-display text-5xl md:text-7xl font-serif leading-none mb-6">Projects</h2>
-          <p className="text-neutral-600 text-base md:text-lg leading-relaxed">
+          <p className="text-lg text-gray-400 font-light leading-snug">
             When you're undertaking a significant build or renovation, clarity matters. Totem partners with clients on transformative projects—new constructions, large-scale renovations, and complex refurbishments—where precision planning and dependable execution are non-negotiable.
           </p>
         </div>

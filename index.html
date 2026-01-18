@@ -55,6 +55,23 @@
       height: 100vh;
       width: 100%;
     }
+    @media (max-width: 768px) {
+      .snap-container {
+        scroll-snap-type: none;
+        height: auto;
+        overflow-y: visible;
+      }
+      .snap-section {
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
+        height: auto;
+        min-height: 100vh;
+      }
+      .snap-section.hero-snap {
+        height: 100vh;
+        min-height: 100vh;
+      }
+    }
     .client-page h3 {
       font-family: 'Marcellus', serif;
     }

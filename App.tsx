@@ -32,7 +32,7 @@ const App: React.FC = () => {
       <ClientNavbar />
       
       <main ref={containerRef} className="snap-container">
-        <section className="snap-section">
+        <section className="snap-section hero-snap">
           <Hero />
         </section>
         
