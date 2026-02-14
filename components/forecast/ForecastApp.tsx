@@ -1,7 +1,7 @@
 
 import React, { useCallback, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
-import ForecastSection, { SectionData } from './ForecastSection';
+import ForecastSection, { AssumptionData, SectionData } from './ForecastSection';
 import { useUndoableState } from './useUndoableState';
 
 const defaultDescription = `Heritage Renovation — Woollahra Residence
@@ -22,6 +22,32 @@ const defaultPertParams = {
   colorIndex: 3,
 };
 
+const defaultAssumptions: AssumptionData[] = [
+  {
+    id: 'assumption-1',
+    label: 'Assumption 1',
+    leftLabel: '0',
+    rightLabel: '100',
+    likelihood: 0.55,
+  },
+  {
+    id: 'assumption-2',
+    label: 'Assumption 2',
+    leftLabel: 'No',
+    rightLabel: 'Yes',
+    likelihood: 0.45,
+  },
+  {
+    id: 'assumption-3',
+    label: 'Assumption 3',
+    leftLabel: 'Weak',
+    rightLabel: 'Strong',
+    likelihood: 0.6,
+  },
+];
+
+const cloneAssumptions = () => defaultAssumptions.map((a) => ({ ...a }));
+
 const newSectionPertParams = {
   min: 40_000,
   mode: 60_000,
@@ -40,6 +66,8 @@ const initialSections: SectionData[] = [
     title: 'Forecast',
     description: defaultDescription,
     pertParams: defaultPertParams,
+    assumptions: cloneAssumptions(),
+    chartView: 'pert',
   },
 ];
 
@@ -58,6 +86,8 @@ const ForecastApp: React.FC = () => {
         title: 'New Scope Item',
         description: 'Describe this scope item — room, trade, or area of work.\n\nClear all text to remove this section.',
         pertParams: { ...newSectionPertParams },
+        assumptions: cloneAssumptions(),
+        chartView: 'pert',
       },
     ]);
     // Scroll to the new section after it renders
@@ -99,6 +129,18 @@ const ForecastApp: React.FC = () => {
   const handlePertParamsChange = useCallback((id: string, pertParams: SectionData['pertParams']) => {
     setSections((prev) =>
       prev.map((s) => (s.id === id ? { ...s, pertParams } : s))
+    );
+  }, [setSections]);
+
+  const handleAssumptionsChange = useCallback((id: string, assumptions: AssumptionData[]) => {
+    setSections((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, assumptions } : s))
+    );
+  }, [setSections]);
+
+  const handleChartViewChange = useCallback((id: string, chartView: SectionData['chartView']) => {
+    setSections((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, chartView } : s))
     );
   }, [setSections]);
 
@@ -215,6 +257,8 @@ const ForecastApp: React.FC = () => {
             onTitleChange={handleTitleChange}
             onDescriptionChange={updateDescription}
             onPertParamsChange={handlePertParamsChange}
+            onAssumptionsChange={handleAssumptionsChange}
+            onChartViewChange={handleChartViewChange}
             onDescriptionBlur={handleDescriptionBlur}
             onMoveUp={handleMoveUp}
             onMoveDown={handleMoveDown}

@@ -1,5 +1,14 @@
 import React, { useRef, useCallback } from 'react';
 import PertDistribution from './PertDistribution';
+import AssumptionSpectrumChart from './AssumptionSpectrumChart';
+
+export interface AssumptionData {
+  id: string;
+  label: string;
+  leftLabel: string;
+  rightLabel: string;
+  likelihood: number;
+}
 
 export interface SectionData {
   id: string;
@@ -13,6 +22,8 @@ export interface SectionData {
     axisMin: number;
     axisMax: number;
   };
+  assumptions: AssumptionData[];
+  chartView: 'pert' | 'assumptions';
 }
 
 interface ForecastSectionProps {
@@ -21,6 +32,8 @@ interface ForecastSectionProps {
   onTitleChange: (id: string, title: string) => void;
   onDescriptionChange: (id: string, description: string) => void;
   onPertParamsChange: (id: string, params: SectionData['pertParams']) => void;
+  onAssumptionsChange: (id: string, assumptions: AssumptionData[]) => void;
+  onChartViewChange: (id: string, view: SectionData['chartView']) => void;
   onDescriptionBlur: (id: string, description: string) => void;
   onMoveUp: (id: string) => void;
   onMoveDown: (id: string) => void;
@@ -47,6 +60,8 @@ const ForecastSection: React.FC<ForecastSectionProps> = ({
   onTitleChange,
   onDescriptionChange,
   onPertParamsChange,
+  onAssumptionsChange,
+  onChartViewChange,
   onDescriptionBlur,
   onMoveUp,
   onMoveDown,
@@ -101,6 +116,11 @@ const ForecastSection: React.FC<ForecastSectionProps> = ({
     hasFired.current = false;
   }, []);
 
+  const toggleChartView = useCallback(() => {
+    const nextView = section.chartView === 'pert' ? 'assumptions' : 'pert';
+    onChartViewChange(section.id, nextView);
+  }, [section.chartView, section.id, onChartViewChange]);
+
   return (
     <section className="snap-section flex items-center px-8 md:px-16 lg:px-24">
       <div className="w-full max-w-[110rem] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-16 items-start lg:items-center h-full py-8">
@@ -149,12 +169,45 @@ const ForecastSection: React.FC<ForecastSectionProps> = ({
           </div>
         </div>
 
-        {/* Right: PERT chart */}
-        <div className="lg:w-[62%] flex-grow flex items-center justify-center min-h-[400px]">
-          <PertDistribution
-            params={section.pertParams}
-            onParamsChange={(p) => onPertParamsChange(section.id, p)}
-          />
+        {/* Right: Chart area */}
+        <div className="lg:w-[62%] flex-grow flex items-center justify-center min-h-[400px] w-full">
+          <div className="w-full relative pr-10">
+            <div className="transition-opacity duration-200">
+              {section.chartView === 'pert' ? (
+                <PertDistribution
+                  params={section.pertParams}
+                  onParamsChange={(p) => onPertParamsChange(section.id, p)}
+                />
+              ) : (
+                <AssumptionSpectrumChart
+                  assumptions={section.assumptions}
+                  onAssumptionsChange={(rows) => onAssumptionsChange(section.id, rows)}
+                />
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={toggleChartView}
+              className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.1] hover:border-white/20 transition-all duration-200 flex items-center justify-center"
+              aria-label={section.chartView === 'pert' ? 'Show assumptions chart' : 'Show PERT chart'}
+              title={section.chartView === 'pert' ? 'Show assumptions chart' : 'Show PERT chart'}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-white/60"
+              >
+                <polyline points="5 3 9 7 5 11" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>

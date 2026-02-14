@@ -82,6 +82,23 @@ function formatDollar(value: number): string {
   return `$${(value / 1000).toFixed(0)}k`;
 }
 
+function parseAxisInput(text: string): number | null {
+  const normalized = text.trim().replace(/[$,\s]/g, '');
+  const match = normalized.match(/^([-+]?\d*\.?\d+)([kKmMbB])?$/);
+  if (!match) return null;
+
+  const numericValue = parseFloat(match[1]);
+  if (!Number.isFinite(numericValue)) return null;
+
+  const suffix = match[2]?.toLowerCase();
+  if (suffix === 'k') return numericValue * 1_000;
+  if (suffix === 'm') return numericValue * 1_000_000;
+  if (suffix === 'b') return numericValue * 1_000_000_000;
+
+  // Preserve existing behavior for values without a suffix.
+  return numericValue >= 1000 ? numericValue : numericValue * 1_000_000;
+}
+
 // --- Constants ---
 
 const SVG_WIDTH = 700;
@@ -250,18 +267,18 @@ const PertDistribution: React.FC<PertDistributionProps> = ({ params, onParamsCha
   // --- Axis editing ---
   const commitAxisMin = () => {
     setEditingAxisMin(false);
-    const parsed = parseFloat(axisMinText.replace(/[^0-9.]/g, ''));
-    if (!isNaN(parsed)) {
-      const val = parsed >= 1000 ? parsed : parsed * 1_000_000;
+    const parsed = parseAxisInput(axisMinText);
+    if (parsed !== null) {
+      const val = parsed;
       onParamsChange({ ...liveParams, axisMin: Math.min(val, liveParams.min - 10_000) });
     }
   };
 
   const commitAxisMax = () => {
     setEditingAxisMax(false);
-    const parsed = parseFloat(axisMaxText.replace(/[^0-9.]/g, ''));
-    if (!isNaN(parsed)) {
-      const val = parsed >= 1000 ? parsed : parsed * 1_000_000;
+    const parsed = parseAxisInput(axisMaxText);
+    if (parsed !== null) {
+      const val = parsed;
       onParamsChange({ ...liveParams, axisMax: Math.max(val, liveParams.max + 10_000) });
     }
   };
@@ -335,7 +352,7 @@ const PertDistribution: React.FC<PertDistributionProps> = ({ params, onParamsCha
         })}
 
         {/* Editable axis min label */}
-        {!editingAxisMin && (
+        {!editingAxisMin ? (
           <text
             x={PADDING.left}
             y={yToSvg(0) + 22}
@@ -351,10 +368,27 @@ const PertDistribution: React.FC<PertDistributionProps> = ({ params, onParamsCha
           >
             {formatDollar(liveParams.axisMin)}
           </text>
+        ) : (
+          <foreignObject
+            x={PADDING.left}
+            y={yToSvg(0) + 8}
+            width={96}
+            height={26}
+          >
+            <input
+              autoFocus
+              type="text"
+              value={axisMinText}
+              onChange={(e) => setAxisMinText(e.target.value)}
+              onBlur={commitAxisMin}
+              onKeyDown={(e) => e.key === 'Enter' && commitAxisMin()}
+              className="w-full bg-transparent border-b border-white/20 text-white/60 text-xs font-body outline-none px-1 py-0.5"
+            />
+          </foreignObject>
         )}
 
         {/* Editable axis max label */}
-        {!editingAxisMax && (
+        {!editingAxisMax ? (
           <text
             x={PADDING.left + CHART_W}
             y={yToSvg(0) + 22}
@@ -370,6 +404,23 @@ const PertDistribution: React.FC<PertDistributionProps> = ({ params, onParamsCha
           >
             {formatDollar(liveParams.axisMax)}
           </text>
+        ) : (
+          <foreignObject
+            x={PADDING.left + CHART_W - 96}
+            y={yToSvg(0) + 8}
+            width={96}
+            height={26}
+          >
+            <input
+              autoFocus
+              type="text"
+              value={axisMaxText}
+              onChange={(e) => setAxisMaxText(e.target.value)}
+              onBlur={commitAxisMax}
+              onKeyDown={(e) => e.key === 'Enter' && commitAxisMax()}
+              className="w-full bg-transparent border-b border-white/20 text-white/60 text-xs font-body outline-none px-1 py-0.5 text-right"
+            />
+          </foreignObject>
         )}
 
         {/* Vertical dashed lines for min/mode/max */}
@@ -482,35 +533,6 @@ const PertDistribution: React.FC<PertDistributionProps> = ({ params, onParamsCha
         </g>
       </svg>
 
-      {/* Axis min/max inline editors (positioned over the SVG) */}
-      {editingAxisMin && (
-        <div className="relative" style={{ marginTop: -38 }}>
-          <input
-            autoFocus
-            type="text"
-            value={axisMinText}
-            onChange={(e) => setAxisMinText(e.target.value)}
-            onBlur={commitAxisMin}
-            onKeyDown={(e) => e.key === 'Enter' && commitAxisMin()}
-            className="absolute left-0 bg-transparent border-b border-white/20 text-white/60 text-xs font-body w-24 outline-none px-1 py-0.5"
-            style={{ bottom: 0 }}
-          />
-        </div>
-      )}
-      {editingAxisMax && (
-        <div className="relative" style={{ marginTop: -38 }}>
-          <input
-            autoFocus
-            type="text"
-            value={axisMaxText}
-            onChange={(e) => setAxisMaxText(e.target.value)}
-            onBlur={commitAxisMax}
-            onKeyDown={(e) => e.key === 'Enter' && commitAxisMax()}
-            className="absolute right-0 bg-transparent border-b border-white/20 text-white/60 text-xs font-body w-24 outline-none px-1 py-0.5 text-right"
-            style={{ bottom: 0 }}
-          />
-        </div>
-      )}
     </div>
   );
 };
