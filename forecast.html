@@ -37,6 +37,41 @@
     .max-w-7xl {
       max-width: 110rem !important;
     }
+    .snap-container {
+      scroll-snap-type: y mandatory;
+      height: 100vh;
+      overflow-y: scroll;
+      scrollbar-width: none;
+    }
+    .snap-container::-webkit-scrollbar {
+      display: none;
+    }
+    .snap-section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      height: 100vh;
+      width: 100%;
+    }
+    @keyframes section-flash {
+      0% { box-shadow: inset 0 0 0 1px rgba(212,175,55,0.4); }
+      100% { box-shadow: inset 0 0 0 1px rgba(212,175,55,0); }
+    }
+    .snap-section.reorder-flash {
+      animation: section-flash 0.6s ease-out forwards;
+    }
+    @media (max-width: 768px) {
+      .snap-container {
+        scroll-snap-type: none;
+        height: auto;
+        overflow-y: visible;
+      }
+      .snap-section {
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
+        height: auto;
+        min-height: 100vh;
+      }
+    }
   </style>
 <script type="importmap">
 {

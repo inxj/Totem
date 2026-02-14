@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 
 // --- PERT / Beta distribution math ---
 
@@ -96,7 +96,7 @@ const GOLD_DIM = 'rgba(212,175,55,0.15)';
 const LAMBDA_MIN = 0.1;
 const LAMBDA_MAX = 50;
 
-interface PertParams {
+export interface PertParams {
   min: number;
   mode: number;
   max: number;
@@ -105,15 +105,15 @@ interface PertParams {
   axisMax: number;
 }
 
-const PertDistribution: React.FC = () => {
-  const [params, setParams] = useState<PertParams>({
-    min: 600_000,
-    mode: 800_000,
-    max: 1_200_000,
-    lambda: 4,
-    axisMin: 500_000,
-    axisMax: 1_300_000,
-  });
+interface PertDistributionProps {
+  params: PertParams;
+  onParamsChange: (params: PertParams) => void;
+}
+
+const PertDistribution: React.FC<PertDistributionProps> = ({ params, onParamsChange }) => {
+  // Local drag state: used for smooth visuals during drag without pushing to undo
+  const [dragParams, setDragParams] = useState<PertParams | null>(null);
+  const liveParams = dragParams ?? params;
 
   const [editingAxisMin, setEditingAxisMin] = useState(false);
   const [editingAxisMax, setEditingAxisMax] = useState(false);
@@ -125,21 +125,21 @@ const PertDistribution: React.FC = () => {
   const dragStartY = useRef<number>(0);
   const dragStartLambda = useRef<number>(0);
 
-  // --- Coordinate transforms ---
+  // --- Coordinate transforms (use liveParams for smooth drag visuals) ---
   const xToSvg = useCallback((val: number) => {
-    return PADDING.left + ((val - params.axisMin) / (params.axisMax - params.axisMin)) * CHART_W;
-  }, [params.axisMin, params.axisMax]);
+    return PADDING.left + ((val - liveParams.axisMin) / (liveParams.axisMax - liveParams.axisMin)) * CHART_W;
+  }, [liveParams.axisMin, liveParams.axisMax]);
 
   const svgToX = useCallback((px: number) => {
-    return params.axisMin + ((px - PADDING.left) / CHART_W) * (params.axisMax - params.axisMin);
-  }, [params.axisMin, params.axisMax]);
+    return liveParams.axisMin + ((px - PADDING.left) / CHART_W) * (liveParams.axisMax - liveParams.axisMin);
+  }, [liveParams.axisMin, liveParams.axisMax]);
 
   // --- Sample the PDF ---
   const samples: { x: number; y: number }[] = [];
   let maxY = 0;
   for (let i = 0; i <= NUM_SAMPLES; i++) {
-    const x = params.axisMin + (i / NUM_SAMPLES) * (params.axisMax - params.axisMin);
-    const y = pertPdf(x, params.min, params.mode, params.max, params.lambda);
+    const x = liveParams.axisMin + (i / NUM_SAMPLES) * (liveParams.axisMax - liveParams.axisMin);
+    const y = pertPdf(x, liveParams.min, liveParams.mode, liveParams.max, liveParams.lambda);
     samples.push({ x, y });
     if (y > maxY) maxY = y;
   }
@@ -158,14 +158,14 @@ const PertDistribution: React.FC = () => {
     .join(' ');
 
   // Filled area
-  const areaD = pathD + ` L${xToSvg(params.axisMax)},${yToSvg(0)} L${xToSvg(params.axisMin)},${yToSvg(0)} Z`;
+  const areaD = pathD + ` L${xToSvg(liveParams.axisMax)},${yToSvg(0)} L${xToSvg(liveParams.axisMin)},${yToSvg(0)} Z`;
 
   // Handle positions
-  const modeY = pertPdf(params.mode, params.min, params.mode, params.max, params.lambda);
+  const modeY = pertPdf(liveParams.mode, liveParams.min, liveParams.mode, liveParams.max, liveParams.lambda);
   const handles = {
-    min: { cx: xToSvg(params.min), cy: yToSvg(0) },
-    max: { cx: xToSvg(params.max), cy: yToSvg(0) },
-    mode: { cx: xToSvg(params.mode), cy: yToSvg(modeY) },
+    min: { cx: xToSvg(liveParams.min), cy: yToSvg(0) },
+    max: { cx: xToSvg(liveParams.max), cy: yToSvg(0) },
+    mode: { cx: xToSvg(liveParams.mode), cy: yToSvg(modeY) },
   };
 
   // --- Drag logic ---
@@ -186,19 +186,21 @@ const PertDistribution: React.FC = () => {
     e.stopPropagation();
     (e.target as Element).setPointerCapture(e.pointerId);
     dragging.current = handle;
+    setDragParams({ ...params });
     const pt = getSvgPoint(e as unknown as MouseEvent);
     dragStartY.current = pt.y;
     dragStartLambda.current = params.lambda;
-  }, [getSvgPoint, params.lambda]);
+  }, [getSvgPoint, params]);
 
   const onPointerMove = useCallback((e: React.PointerEvent) => {
     if (!dragging.current) return;
     const pt = getSvgPoint(e as unknown as MouseEvent);
     const val = svgToX(pt.x);
+    const handle = dragging.current;
 
-    setParams((prev) => {
+    setDragParams((prev) => {
+      if (!prev) return prev;
       const next = { ...prev };
-      const handle = dragging.current!;
 
       if (handle === 'min') {
         next.min = Math.max(prev.axisMin, Math.min(val, prev.mode - 10_000));
@@ -218,16 +220,23 @@ const PertDistribution: React.FC = () => {
     });
   }, [getSvgPoint, svgToX]);
 
+  const dragParamsRef = useRef<PertParams | null>(null);
+  dragParamsRef.current = dragParams;
+
   const onPointerUp = useCallback(() => {
+    if (dragging.current && dragParamsRef.current) {
+      onParamsChange(dragParamsRef.current);
+    }
     dragging.current = null;
-  }, []);
+    setDragParams(null);
+  }, [onParamsChange]);
 
   // --- Axis ticks ---
   const tickCount = 6;
   const ticks: number[] = [];
-  const tickStep = (params.axisMax - params.axisMin) / tickCount;
+  const tickStep = (liveParams.axisMax - liveParams.axisMin) / tickCount;
   for (let i = 0; i <= tickCount; i++) {
-    ticks.push(params.axisMin + i * tickStep);
+    ticks.push(liveParams.axisMin + i * tickStep);
   }
 
   // --- Axis editing ---
@@ -236,7 +245,7 @@ const PertDistribution: React.FC = () => {
     const parsed = parseFloat(axisMinText.replace(/[^0-9.]/g, ''));
     if (!isNaN(parsed)) {
       const val = parsed >= 1000 ? parsed : parsed * 1_000_000;
-      setParams((p) => ({ ...p, axisMin: Math.min(val, p.min - 10_000) }));
+      onParamsChange({ ...liveParams, axisMin: Math.min(val, liveParams.min - 10_000) });
     }
   };
 
@@ -245,13 +254,13 @@ const PertDistribution: React.FC = () => {
     const parsed = parseFloat(axisMaxText.replace(/[^0-9.]/g, ''));
     if (!isNaN(parsed)) {
       const val = parsed >= 1000 ? parsed : parsed * 1_000_000;
-      setParams((p) => ({ ...p, axisMax: Math.max(val, p.max + 10_000) }));
+      onParamsChange({ ...liveParams, axisMax: Math.max(val, liveParams.max + 10_000) });
     }
   };
 
   // --- Computed stats ---
-  const p20 = pertQuantile(0.2, params.min, params.mode, params.max, params.lambda);
-  const p80 = pertQuantile(0.8, params.min, params.mode, params.max, params.lambda);
+  const p20 = pertQuantile(0.2, liveParams.min, liveParams.mode, liveParams.max, liveParams.lambda);
+  const p80 = pertQuantile(0.8, liveParams.min, liveParams.mode, liveParams.max, liveParams.lambda);
 
   return (
     <div className="w-full select-none">
@@ -319,11 +328,11 @@ const PertDistribution: React.FC = () => {
             fontFamily="Inter, sans-serif"
             className="cursor-text"
             onClick={() => {
-              setAxisMinText(formatDollar(params.axisMin));
+              setAxisMinText(formatDollar(liveParams.axisMin));
               setEditingAxisMin(true);
             }}
           >
-            {formatDollar(params.axisMin)}
+            {formatDollar(liveParams.axisMin)}
           </text>
         )}
 
@@ -338,17 +347,17 @@ const PertDistribution: React.FC = () => {
             fontFamily="Inter, sans-serif"
             className="cursor-text"
             onClick={() => {
-              setAxisMaxText(formatDollar(params.axisMax));
+              setAxisMaxText(formatDollar(liveParams.axisMax));
               setEditingAxisMax(true);
             }}
           >
-            {formatDollar(params.axisMax)}
+            {formatDollar(liveParams.axisMax)}
           </text>
         )}
 
         {/* Vertical dashed lines for min/mode/max */}
         {(['min', 'mode', 'max'] as const).map((key) => {
-          const val = params[key];
+          const val = liveParams[key];
           const sx = xToSvg(val);
           const topY = key === 'mode' ? handles.mode.cy : yToSvg(0) - 8;
           return (
@@ -374,17 +383,7 @@ const PertDistribution: React.FC = () => {
           fontFamily="Inter, sans-serif"
           fontWeight={500}
         >
-          {formatDollar(params.mode)}
-        </text>
-        <text
-          x={handles.mode.cx}
-          y={handles.mode.cy - 32}
-          textAnchor="middle"
-          fill="rgba(255,255,255,0.3)"
-          fontSize={9}
-          fontFamily="Inter, sans-serif"
-        >
-          λ={params.lambda.toFixed(1)}
+          {formatDollar(liveParams.mode)}
         </text>
 
         {/* P20 indicator */}
