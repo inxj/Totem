@@ -93,6 +93,13 @@ const NUM_SAMPLES = 200;
 const HANDLE_R = 7;
 const GOLD = '#D4AF37';
 const GOLD_DIM = 'rgba(212,175,55,0.15)';
+const FILL_COLORS = [
+  'rgba(212,175,55,0.15)',   // yellow/gold
+  'rgba(80,140,220,0.15)',   // blue
+  'rgba(80,200,120,0.15)',   // green
+  'rgba(255,255,255,0.15)',  // white
+  'rgba(220,80,80,0.15)',    // red
+];
 const LAMBDA_MIN = 0.1;
 const LAMBDA_MAX = 50;
 
@@ -103,6 +110,7 @@ export interface PertParams {
   lambda: number;
   axisMin: number;
   axisMax: number;
+  colorIndex?: number;
 }
 
 interface PertDistributionProps {
@@ -273,7 +281,16 @@ const PertDistribution: React.FC<PertDistributionProps> = ({ params, onParamsCha
         onPointerLeave={onPointerUp}
       >
         {/* Filled area */}
-        <path d={areaD} fill={GOLD_DIM} />
+        <path
+          d={areaD}
+          fill={FILL_COLORS[(liveParams.colorIndex ?? 3) % FILL_COLORS.length]}
+          onDoubleClick={(e) => {
+            e.preventDefault();
+            const next = ((liveParams.colorIndex ?? 3) + 1) % FILL_COLORS.length;
+            onParamsChange({ ...liveParams, colorIndex: next });
+          }}
+          className="cursor-pointer"
+        />
 
         {/* Curve */}
         <path d={pathD} fill="none" stroke="#ffffff" strokeWidth={2} />

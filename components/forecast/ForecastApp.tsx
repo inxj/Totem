@@ -19,6 +19,7 @@ const defaultPertParams = {
   lambda: 4,
   axisMin: 500_000,
   axisMax: 1_300_000,
+  colorIndex: 3,
 };
 
 const newSectionPertParams = {
@@ -28,6 +29,7 @@ const newSectionPertParams = {
   lambda: 4,
   axisMin: 30_000,
   axisMax: 120_000,
+  colorIndex: 3,
 };
 
 let nextId = 2;
