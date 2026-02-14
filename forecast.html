@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Totem — Forecast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#D4AF37",
+            "totem-black": "#0A0A0A",
+            "totem-white": "#FFFFFF",
+            "totem-gray": "#171717",
+          },
+          fontFamily: {
+            display: ["Marcellus", "serif"],
+            serif: ["Marcellus", "serif"],
+            body: ["Inter", "Avenir Next", "Avenir", "sans-serif"],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      scroll-behavior: smooth;
+    }
+    .client-page h3 {
+      font-family: 'Marcellus', serif;
+    }
+    .max-w-7xl {
+      max-width: 110rem !important;
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-[#1a1a1a] text-[#fafafa] antialiased font-body">
+  <div id="root"></div>
+<script type="module" src="/components/forecast/ForecastApp.tsx"></script>
+</body>
+</html>

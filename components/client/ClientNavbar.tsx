@@ -23,7 +23,7 @@ const ClientNavbar: React.FC = () => {
       </div>
 
       <a
-        href="/partner.html"
+        href="/partner/"
         className="px-6 py-2 border border-current text-xs font-medium tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-300"
       >
         For Builders

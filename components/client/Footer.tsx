@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ViewMode } from '../types';
+import { ViewMode } from './types';
 
 interface FooterProps {
   viewMode: ViewMode;
@@ -8,7 +8,7 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ viewMode }) => {
   const isPartner = viewMode === 'partner';
-  const portalLink = isPartner ? '/' : '/partner.html';
+  const portalLink = isPartner ? '/' : '/partner/';
   const portalLabel = isPartner ? 'Client Site' : 'Builder Login';
 
   return (

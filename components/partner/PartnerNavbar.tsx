@@ -10,7 +10,7 @@ const PartnerNavbar: React.FC = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-8 py-6 bg-transparent mix-blend-difference text-white">
-      <a href="/partner.html" className="text-2xl font-display tracking-tight">
+      <a href="/partner/" className="text-2xl font-display tracking-tight">
         Totem
       </a>
 

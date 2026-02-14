@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Step } from '../types';
+import { Step } from './types';
 
 interface Props {
   steps: Step[];

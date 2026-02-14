@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ViewMode, ValueProp } from '../types';
+import { ViewMode, ValueProp } from './types';
 
 interface Props {
   viewMode: ViewMode;

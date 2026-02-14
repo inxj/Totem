@@ -1,11 +1,12 @@
 
 import React, { useEffect, useRef } from 'react';
-import ClientNavbar from './components/ClientNavbar';
-import Hero from './components/Hero';
-import PromiseSection from './components/PromiseSection';
-import QuotelessSection from './components/QuotelessSection';
-import ProjectsSection from './components/ProjectsSection';
-import Footer from './components/Footer';
+import ReactDOM from 'react-dom/client';
+import ClientNavbar from './ClientNavbar';
+import Hero from './Hero';
+import PromiseSection from './PromiseSection';
+import QuotelessSection from './QuotelessSection';
+import ProjectsSection from './ProjectsSection';
+import Footer from './Footer';
 
 const App: React.FC = () => {
   const viewMode = 'client' as const;
@@ -55,5 +56,17 @@ const App: React.FC = () => {
     </div>
   );
 };
+
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error("Could not find root element to mount to");
+}
+
+const root = ReactDOM.createRoot(rootElement);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
 export default App;

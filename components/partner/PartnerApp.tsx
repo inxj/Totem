@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
 import { ValueProp, Step, ViewMode } from './types';
-import PartnerNavbar from './components/PartnerNavbar';
-import PartnerHero from './components/PartnerHero';
-import ValueProposition from './components/ValueProposition';
-import BusinessModel from './components/BusinessModel';
-import StepsTimeline from './components/StepsTimeline';
-import ContactSection from './components/ContactSection';
-import Footer from './components/Footer';
+import PartnerNavbar from './PartnerNavbar';
+import PartnerHero from './PartnerHero';
+import ValueProposition from './ValueProposition';
+import BusinessModel from './BusinessModel';
+import StepsTimeline from './StepsTimeline';
+import ContactSection from './ContactSection';
+import Footer from './Footer';
 
 const PartnerApp: React.FC = () => {
   const viewMode: ViewMode = 'partner';
@@ -102,5 +103,17 @@ const PartnerApp: React.FC = () => {
     </div>
   );
 };
+
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error('Could not find root element to mount to');
+}
+
+const root = ReactDOM.createRoot(rootElement);
+root.render(
+  <React.StrictMode>
+    <PartnerApp />
+  </React.StrictMode>
+);
 
 export default PartnerApp;
